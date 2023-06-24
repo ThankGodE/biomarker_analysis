@@ -2,12 +2,12 @@ This script analysis biomarker clinical data. It runs on a python virtual enviro
 
 If you wish to use your own python version, please install the libraries in the requirements file.
 
-Steps to use:
+# Steps to use:
 
-1. Activate python virtual environment in the code base
+### 1. Activate python virtual environment in the code base
 
-source biomarker_analysis/venv/bin/activate
+`source biomarker_analysis/venv/bin/activate`
 
-2. Run script with the required arguments:
+### 2. Run script with the required arguments:
 
-src/main/identify_biomarkers.py -o path_to_output_directory/ -i clinical.csv
+`src/main/identify_biomarkers.py -o path_to_output_directory/ -i clinical.csv`
