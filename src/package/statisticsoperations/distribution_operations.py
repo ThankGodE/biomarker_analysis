@@ -70,7 +70,7 @@ class DistributionOperations:
         plt.title("Time course of biomarkers through D0, D1, and D2")
         plt.xlabel("Visits")
         plt.ylabel("Biomaker")
-        plt.legend(loc='best')
+        plt.legend(fontsize="small")
 
         plt.savefig(absolute_path_to_distribution_output)
 
