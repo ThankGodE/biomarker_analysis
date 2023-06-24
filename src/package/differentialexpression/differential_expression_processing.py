@@ -14,7 +14,7 @@ from scipy.stats import ttest_ind
 
 
 class DifferentialExpressionProcessor:
-    """ class that performs differential  expression calculations """
+    """ class that performs differential  expression calculations... """
 
     clinical_data = None
     target_variable_column_name = None

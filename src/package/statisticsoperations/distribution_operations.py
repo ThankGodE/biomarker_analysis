@@ -30,7 +30,7 @@ class DistributionOperations:
 
     def process_time_course_distribution(
             self, identified_markers: pd.DataFrame, absolute_path_to_distribution_output: str) -> None:
-        """ processes time course distributions """
+        """ processes time course distributions... """
 
         try:
 
