@@ -35,8 +35,6 @@ from src.package.profiling.profiling import begin_profiling, end_profiling, Prof
 from src.package.statisticsoperations.distribution_operations import DistributionOperations
 
 
-
-
 # profiling begins ###
 profiling_starting = begin_profiling("")
 
@@ -72,8 +70,6 @@ def main() -> None:
 
         # distribution operations
         distribution_operation: DistributionOperations = DistributionOperations(differential_expression_processor)
-
-
 
     except ValueError as e:
 
