@@ -11,3 +11,6 @@ If you wish to use your own python version, please install the libraries in the 
 ### 2. Run script with the required arguments:
 
 `src/main/identify_biomarkers.py -o path_to_output_directory/ -i clinical.csv`
+
+### optional: 
+`src/main/identify_biomarkers.py -h`'

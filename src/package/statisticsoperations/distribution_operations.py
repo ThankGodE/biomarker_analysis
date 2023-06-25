@@ -10,8 +10,10 @@ from src.package.differentialexpression.differential_expression_processing impor
 
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 from src.package.enumsoperations.string_enums import WORDS
+from src.package.listoperations.list_operations import get_first_element, get_second_element
 
 
 class DistributionOperations:
@@ -29,13 +31,26 @@ class DistributionOperations:
 
 
     def process_time_course_distribution(
-            self, identified_markers: pd.DataFrame, absolute_path_to_distribution_output: str) -> None:
+            self, identified_markers: pd.DataFrame, absolute_path_to_distribution_output_directory: str) -> None:
         """ processes time course distributions... """
 
         try:
 
-            DistributionOperations.__plot_time_course_distribution(
-                identified_markers, absolute_path_to_distribution_output)
+            identified_markers_column: list = DistributionOperations.__get_identified_markers(identified_markers)
+
+            complete_clinical_data: pd.DataFrame = \
+                self.differential_expression_processor_object.get_complete_clinical_dataframe()
+
+            unique_treatments: list = complete_clinical_data[
+                self.differential_expression_processor_object.get_target_variable_column_name()].unique()
+
+            DistributionOperations.__plot_time_course_line_distribution(
+                identified_markers_column, absolute_path_to_distribution_output_directory,
+                unique_treatments, complete_clinical_data)
+
+            DistributionOperations.__plot_heatmap_time_course_distribution(
+                identified_markers_column, absolute_path_to_distribution_output_directory,
+                unique_treatments, complete_clinical_data)
 
         except ValueError as e:
             raise ValueError("an {} error has occurred".format(e))
@@ -44,27 +59,50 @@ class DistributionOperations:
             raise TypeError("an {} error has occurred".format(e))
 
     @classmethod
-    def __plot_time_course_distribution(cls, identified_markers: pd.DataFrame,
-                                        absolute_path_to_distribution_output: str) -> None:
+    def __plot_heatmap_time_course_distribution(cls, identified_markers_columns: list,
+                                                absolute_path_to_distribution_output_directory: str,
+                                                unique_treatments: list, complete_clinical_data: pd.DataFrame) -> None:
+        """ generates heatmap distribution """
+
+        clinical_data_with_treatments_of_interest: pd.DataFrame = complete_clinical_data[complete_clinical_data[
+            WORDS.TREATMENT_COLUMN_NAME].str.contains(get_first_element(unique_treatments)) |
+            complete_clinical_data[WORDS.TREATMENT_COLUMN_NAME].str.contains(get_second_element(unique_treatments))]
+
+        clinical_data_with_treatments_of_interest = clinical_data_with_treatments_of_interest[
+            identified_markers_columns]
+
+        correlation_matrix = clinical_data_with_treatments_of_interest.corr()
+
+        plt.figure(figsize=(14, 12))
+
+        sns.heatmap(correlation_matrix, cmap='coolwarm',  vmax=0.8, vmin=0.8, square=True)
+
+        plt.title("Time course of biomarkers through D0, D1, and D2")
+        plt.xlabel("Visits")
+        plt.ylabel("Biomaker")
+        plt.legend(fontsize="small")
+
+        plt.savefig(os.path.join(absolute_path_to_distribution_output_directory, "time_series_of_biomaker_heatmap.pdf"))
+
+
+    @classmethod
+    def __plot_time_course_line_distribution(cls, identified_markers_columns: list,
+                                             absolute_path_to_distribution_output_directory: str, unique_treatments: list,
+                                             complete_clinical_data: pd.DataFrame) -> None:
         """
         Time course distribution function.
         """
 
-        complete_clinical_data = cls.differential_expression_processor_object.get_complete_clinical_dataframe()
-
-        identified_markers_column = DistributionOperations.__get_identified_markers(identified_markers)
-
         warnings.filterwarnings("ignore", category=UserWarning, module="matplotlib")
 
-        plt.figure(figsize=(8, 6))
+        plt.figure(figsize=(26, 24))
 
-        for treatment in complete_clinical_data[
-            cls.differential_expression_processor_object.get_target_variable_column_name()].unique():
+        for treatment in unique_treatments:
 
-            complete_clinical_data_treatment = complete_clinical_data[complete_clinical_data[
+            complete_clinical_data_treatment: pd.DataFrame = complete_clinical_data[complete_clinical_data[
                                                         WORDS.TREATMENT_COLUMN_NAME] == treatment]
 
-            DistributionOperations.__process_biomarker_column(identified_markers_column,
+            DistributionOperations.__process_biomarker_column(identified_markers_columns,
                                                               complete_clinical_data_treatment, treatment)
 
         plt.title("Time course of biomarkers through D0, D1, and D2")
@@ -72,7 +110,7 @@ class DistributionOperations:
         plt.ylabel("Biomaker")
         plt.legend(fontsize="small")
 
-        plt.savefig(absolute_path_to_distribution_output)
+        plt.savefig(os.path.join(absolute_path_to_distribution_output_directory, "time_series_of_biomaker.pdf"))
 
     @classmethod
     def __process_biomarker_column(cls, biomarkers: list, complete_clinical_data: pd.DataFrame, label: str):

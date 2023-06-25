@@ -115,7 +115,7 @@ def main() -> None:
         # distribution operations output
         distribution_operation.process_time_course_distribution(
             differential_expression_processor.get_identified_biomarkers(),
-            os.path.join(path2output_dir, "time_series_of_biomaker.pdf"))
+            path2output_dir)
 
 
 ###################################################################################
