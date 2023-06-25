@@ -6,6 +6,8 @@ If you wish to use your own python version, please install the libraries in the 
 
 ### 1. Activate python virtual environment in the code base
 
+`git clone --branch development_branch https://github.com/ThankGodE/biomarker_analysis.git`
+
 `source venv/bin/activate`
 
 
