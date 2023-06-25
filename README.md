@@ -6,8 +6,6 @@ If you wish to use your own python version, please install the libraries in the 
 
 ### 1. Activate python virtual environment in the code base
 
-`cd biomarker_analysis/`
-
 `source venv/bin/activate`
 
 
