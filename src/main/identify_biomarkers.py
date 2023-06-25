@@ -12,7 +12,6 @@ Required:
 __author__ = "{ThankGod Ebenezer}"
 
 import os
-import sys
 
 import pandas as pd
 

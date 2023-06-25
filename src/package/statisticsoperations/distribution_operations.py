@@ -68,18 +68,20 @@ class DistributionOperations:
             WORDS.TREATMENT_COLUMN_NAME].str.contains(get_first_element(unique_treatments)) |
             complete_clinical_data[WORDS.TREATMENT_COLUMN_NAME].str.contains(get_second_element(unique_treatments))]
 
-        clinical_data_with_treatments_of_interest = clinical_data_with_treatments_of_interest[
-            identified_markers_columns]
+        encoded_dummy_time = pd.get_dummies(clinical_data_with_treatments_of_interest[WORDS.VISIT])
+
+        clinical_data_with_treatments_of_interest = pd.concat([clinical_data_with_treatments_of_interest[
+            identified_markers_columns], encoded_dummy_time], axis=1)
 
         correlation_matrix = clinical_data_with_treatments_of_interest.corr()
 
-        plt.figure(figsize=(14, 12))
+        plt.figure(figsize=(22, 20))
 
-        sns.heatmap(correlation_matrix, cmap='coolwarm',  vmax=0.8, vmin=0.8, square=True)
+        sns.heatmap(correlation_matrix, cmap='coolwarm',  vmax=0.8, vmin=0.8, square=True, center=0)
 
-        plt.title("Time course of biomarkers through D0, D1, and D2")
-        plt.xlabel("Visits")
-        plt.ylabel("Biomaker")
+        plt.title("Correlation time course of biomarkers through D0, D1, and D2")
+        plt.xlabel("Biomaker + Visits")
+        plt.ylabel("Biomaker + Visits ")
         plt.legend(fontsize="small")
 
         plt.savefig(os.path.join(absolute_path_to_distribution_output_directory, "time_series_of_biomaker_heatmap.pdf"))
