@@ -6,11 +6,14 @@ If you wish to use your own python version, please install the libraries in the 
 
 ### 1. Activate python virtual environment in the code base
 
-`source biomarker_analysis/venv/bin/activate`
+`cd biomarker_analysis/`
+
+`source venv/bin/activate`
+
 
 ### 2. Run script with the required arguments:
 
-`src/main/identify_biomarkers.py -o path_to_output_directory/ -i clinical.csv`
+`python3 src/main/identify_biomarkers.py -o output_directory/ -i clinical.csv`
 
 ### optional: 
-`src/main/identify_biomarkers.py -h`'
+`src/main/identify_biomarkers.py -h`

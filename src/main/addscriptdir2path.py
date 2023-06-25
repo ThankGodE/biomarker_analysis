@@ -34,7 +34,6 @@ def add_package2env_var() -> None:
         )
         load_package_paths(path_to_env_var_file)
 
-
 def check_srcpkgpath_env_var(environment_variable_file: str) -> None:
     """check that the declared environment variables in the .env file exist"""
 
@@ -66,6 +65,7 @@ def load_package_paths(env_var_files: str) -> None:
     elif isinstance(env_var_files, str) is True:
         specifically_load_files(env_var_files)
 
+
 def specifically_load_files(file2load: str) -> None:
     """ specifically load environment variable files """
 
@@ -80,8 +80,10 @@ def specifically_load_files(file2load: str) -> None:
 
     else:
         path2package = os.getenv("SOURCEPKGPATH")
-        sys.path.append(path2package)
+        environment_variable_file_dirname = os.path.dirname(file2load)
 
+        sys.path.append(path2package)
+        sys.path.append(environment_variable_file_dirname)
 
 
 def run_script_base_dir() -> str:

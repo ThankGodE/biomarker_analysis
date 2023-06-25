@@ -20,6 +20,12 @@ import pandas as pd
 
 # Futures local application libraries, source package
 from addscriptdir2path import add_package2env_var
+
+# re-define system path to include modules, packages
+# and libraries in environment variable
+add_package2env_var()
+
+
 from src.package.commandlineoperations.commandline_input_argument_getter import CliInputArgumentGetter
 from src.package.differentialexpression.differential_expression_processing import DifferentialExpressionProcessor
 from src.package.enumsoperations.string_enums import WORDS
@@ -28,9 +34,7 @@ from src.package.filewriteoperations.file_writer import FileWriter
 from src.package.profiling.profiling import begin_profiling, end_profiling, ProfileLogger
 from src.package.statisticsoperations.distribution_operations import DistributionOperations
 
-# re-define system path to include modules, packages
-# and libraries in environment variable
-add_package2env_var()
+
 
 
 # profiling begins ###
@@ -75,7 +79,7 @@ def main() -> None:
 
         raise ValueError("Exception caught: {}".format(e))
 
-    finally:
+    else:
 
         # output pre-filtering of missing values
 
