@@ -1,0 +1,5 @@
+	TREATMENT
+count	300
+unique	2
+top	DRUG
+freq	150

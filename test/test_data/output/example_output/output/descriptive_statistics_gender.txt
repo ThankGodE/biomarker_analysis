@@ -1,0 +1,5 @@
+	GENDER
+count	300
+unique	2
+top	FEMALE
+freq	168
