@@ -1,6 +1,6 @@
 This script analysis biomarker clinical data. It runs on a python virtual environment with all libraries installed.
 
-If you wish to use your own python version, please install the libraries in the requirements file..
+If you wish to use your own python version, please install the libraries in the requirements file.
 
 # Steps to use:
 
